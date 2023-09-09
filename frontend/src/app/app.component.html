@@ -1,0 +1,47 @@
+<html>
+  <head>
+<title>Input Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body >
+    <h1 class="display-4 heading">Enter Your Name Below</h1>
+    <div class="custom-container">
+      <div class="container top-div">
+        <div class="container mx-auto">
+            <form (ngSubmit)="onSubmit()">
+              <input class="input-group input-group-lg" (input)="inputChanged($event)" maxlength="20">
+              <p >{{name}}</p>
+              <input class="btn" type="submit" 
+              [ngClass]="{'btn-outline-success': !(name.length == 20 || isSpecialCharcterFound), 'btn-outline-danger':(name.length == 20 || isSpecialCharcterFound)}"
+              [disabled]="(name.length == 20 || isSpecialCharcterFound || name == '')">
+
+              <div *ngIf="response !== undefined" class="alert alert-success" role="alert">
+                <h4 class="alert-heading">{{response}}</h4>
+              
+                <hr>
+              </div>
+
+              <div *ngIf="isSameName" class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Entered Name and Previous Entered Name Matches ,<br>Try a New Name</h4>
+              
+              </div>
+              
+              <div *ngIf="name.length == 20" class="alert alert-danger alert-dismissible" role="alert">
+
+                <p>Name Should not be more than 20 Character</p>
+              </div>
+
+              <div *ngIf="isSpecialCharcterFound" class="alert alert-danger" role="alert">
+
+                <p>Only Space is Allowed ,No Other Special Character is Allowed </p>
+              </div>
+
+              
+          </form>
+        
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
