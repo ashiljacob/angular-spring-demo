@@ -13,10 +13,10 @@
               <p >{{name}}</p>
               <input class="btn" type="submit" 
               [ngClass]="{'btn-outline-success': !(name.length == 20 || isSpecialCharcterFound), 'btn-outline-danger':(name.length == 20 || isSpecialCharcterFound)}"
-              [disabled]="(name.length == 20 || isSpecialCharcterFound || name == '')">
+              [disabled]="(name.length == 20 || isSpecialCharcterFound )">
 
-              <div *ngIf="response !== undefined" class="alert alert-success" role="alert">
-                <h4 class="alert-heading">{{response}}</h4>
+              <div *ngIf="response !== undefined" [ngClass]="{'alert alert-success': !isNameEmpty, 'alert alert-danger': isNameEmpty}"  role="alert">
+                <h4 class="alert-heading" >{{response}}</h4>
               
                 <hr>
               </div>

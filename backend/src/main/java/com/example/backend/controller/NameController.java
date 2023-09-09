@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -20,12 +21,19 @@ public class NameController {
                                             "hope you're doing well!");
 
     @PostMapping
-    public String postName(@RequestBody String body){
+    public ResponseEntity<String> postName(@RequestBody(required = false) String body){
+        System.out.println(body);
 
-        int index = random.nextInt(greetingList.size());
-        String response = greetingList.get(index) + " " + body;
+        if (body == null || body.isEmpty()) {
+            return ResponseEntity.badRequest().body("Bad Requset , Name Is Empty ");
+        }else {
 
-        return response;
+            int index = random.nextInt(greetingList.size());
+            String response = "Hello " + body + "  ," + greetingList.get(index);
+            System.out.println(body);
+
+            return ResponseEntity.ok().body(response);
+        }
     }
 
 }

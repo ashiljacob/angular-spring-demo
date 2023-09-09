@@ -24,8 +24,9 @@ export class AppComponent {
   response: any = undefined;
   baseUrl: string = "http://localhost:8080/"
   responseL: string = ''
-  lastEnteredName: string =''
+  lastEnteredName: any =undefined
   isSameName :boolean= false
+  isNameEmpty:boolean = false
  
 
    inputChanged(event:any){
@@ -40,6 +41,7 @@ export class AppComponent {
    }
 
    onSubmit(){
+
     console.log("URL : "+this.baseUrl)
     console.log("name : "+this.name)
 
@@ -53,15 +55,19 @@ export class AppComponent {
       this.isSameName=false
       this.lastEnteredName = this.name
 
-      this.getData().subscribe(
+      this.postData().subscribe(
         (response) => {
           // Handle the successful response here
+          this.isNameEmpty = false
           this.response = response
           console.log(response);
         },
         (error) => {
           // Handle errors here
-          console.error(error);
+          this.isNameEmpty = true
+          this.response = error.error
+          console.log(error);
+          console.log(error.error);
         }
       )
     }
@@ -70,7 +76,7 @@ export class AppComponent {
    }
 
 
-  getData(): Observable<any> {
+  postData(): Observable<any> {
     return this.http.post(this.baseUrl,this.name, {
       responseType: "text"});
   }
